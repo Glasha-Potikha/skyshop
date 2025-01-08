@@ -23,7 +23,7 @@ public class Basket {
         if (res == "") {
             return "в корзине пусто";
         }
-        res += "Итого: " + this.getTotalPrice();
+        res += "Итого: " + this.getTotalPrice() + '\n' + "Специальных товаров: " + this.getAllSpecial();
         return res;
     }
 
@@ -50,6 +50,16 @@ public class Basket {
         for (Product product : this.products) {
             if (product != null) {
                 res += product.getPrice();
+            }
+        }
+        return res;
+    }
+
+    public int getAllSpecial() {
+        int res = 0;
+        for (Product product : this.products) {
+            if (product.isSpecial()) {
+                res++;
             }
         }
         return res;
