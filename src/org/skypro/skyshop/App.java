@@ -2,7 +2,9 @@ package org.skypro.skyshop;//TIP To <b>Run</b> code, press <shortcut actionId="R
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
 import org.skypro.skyshop.basket.Basket;
-import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 
 public class App {
     public static void main(String[] args) {
@@ -11,12 +13,12 @@ public class App {
 
     public static void testAppStationery() {
         //товары канцелярского магазина
-        Product pen = new Product("ручка синяя", 15);
-        Product pencil = new Product("карандаш", 10);
-        Product album = new Product("Альбом для рисования", 73);
-        Product squaredNotebook = new Product("тетрадь в клетку", 12);
-        Product linedNotebook = new Product("тетрадь в линейку", 11);
-        Product coloredCardboard = new Product("цветной картон", 60);
+        SimpleProduct pen = new SimpleProduct("ручка синяя", 15);
+        FixPriceProduct pencil = new FixPriceProduct("карандаш");
+        FixPriceProduct album = new FixPriceProduct("Альбом для рисования");
+        DiscountedProduct squaredNotebook = new DiscountedProduct("тетрадь в клетку", 12, 15);
+        DiscountedProduct linedNotebook = new DiscountedProduct("тетрадь в линейку", 11, 10);
+        SimpleProduct coloredCardboard = new SimpleProduct("цветной картон", 60);
         //корзина покупателя Саша
         Basket sasha = new Basket();
         // 1.
@@ -43,7 +45,6 @@ public class App {
         System.out.println("Общая стоимость корзины " + sasha.getTotalPrice() + " рублей");
         //10.
         System.out.println(sasha.isProductInBasket(coloredCardboard.getName()));
-
     }
 
 }
