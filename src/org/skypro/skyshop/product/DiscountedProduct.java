@@ -1,8 +1,8 @@
 package org.skypro.skyshop.product;
 
 public class DiscountedProduct extends Product {
-    private int basePrice;
-    private int percentageDiscount;
+    final private int basePrice;
+    final private int percentageDiscount;
     //Скидка может быть только положительным целым числом от 0 до 100
 
     public DiscountedProduct(String name, int basePrice, int percentageDiscount) {
@@ -27,4 +27,6 @@ public class DiscountedProduct extends Product {
         return super.getName() +
                 ": " + basePrice + " (" + percentageDiscount + ")";
     }
+
+
 }
