@@ -5,6 +5,7 @@ import org.skypro.skyshop.basket.Basket;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.Searchable;
@@ -16,6 +17,65 @@ public class App {
         testAppStationery();
         System.out.println("________________" + '\n');
         testAppStationeryWithSearchAndArticle();
+        System.out.println("________________" + '\n');
+        testAppStationeryWithException();
+    }
+
+    public static void testAppStationeryWithException() {
+        try {
+            Searchable pencil = new FixPriceProduct("  ");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка - неверный ввод наименования продукта");
+        }
+
+        try {
+            Searchable pen = new SimpleProduct("ручка синяя", -15);
+        } catch (Exception e) {
+            System.out.println("Ошибка - неверный ввод цены");
+        }
+        try {
+            Searchable squaredNotebook = new DiscountedProduct("тетрадь в клетку", 12, 115);
+        } catch (Exception e) {
+            System.out.println("Ошибка - неверный ввод базовой цены");
+        }
+        try {
+            Searchable linedNotebook = new DiscountedProduct("тетрадь в линейку", 0, 10);
+        } catch (Exception e) {
+            System.out.println("Ошибка - неверный ввод процентов");
+        }
+
+
+        System.out.println('\n' + "--Демонстрация нового метода поиска-");
+        //товары канцелярского магазина
+        Searchable pen = new SimpleProduct("ручка синяя", 15);
+        Searchable pencil = new FixPriceProduct("карандаш");
+        Searchable album = new FixPriceProduct("альбом для рисования");
+        Searchable squaredNotebook = new DiscountedProduct("тетрадь в клетку", 12, 15);
+        Searchable linedNotebook = new DiscountedProduct("тетрадь в линейку", 11, 10);
+        SimpleProduct coloredCardboard = new SimpleProduct("цветной картон", 60);
+        //Статьи
+        Searchable aboutPen = new Article("Шариковой ручка", "Ша́риковая ру́чка — разновидность ручки (авторучки), при письме которой чернила переносятся из резервуара на бумагу вращающимся шариком.");
+        Searchable aboutPencil = new Article("Графитовый карандаш", "Деревянная палочка со стержнем из графита для письма, рисования, черчения.");
+        Searchable aboutNotebook = new Article("Школьная тетрадь", "тетрадь, предназначенная для письма школьниками в период обучения в общеобразовательных учебных учреждениях и учреждениях начального профессионального образования.");
+
+        SearchEngine stationery = new SearchEngine(9);
+        stationery.add(pen);
+        stationery.add(pencil);
+        stationery.add(album);
+        stationery.add(squaredNotebook);
+        stationery.add(linedNotebook);
+        stationery.add(coloredCardboard);
+        stationery.add(aboutPen);
+        stationery.add(aboutPencil);
+        stationery.add(aboutNotebook);
+        try {
+            System.out.println('\n' + "Поиск по слову - тетрадь: " + '\n' + stationery.searchForTheBestMatch("тетрадь") + '\n');
+            stationery.searchForTheBestMatch("глобус");
+        } catch (
+                BestResultNotFound e) {
+            System.out.println("Для поискового запроса - " + e.getMessage() + " - не нашлось подходящей статьи");
+        }
+
     }
 
     public static void testAppStationeryWithSearchAndArticle() {
@@ -37,7 +97,7 @@ public class App {
 
         //Функциональность Article:
         System.out.println(aboutPen);
-        System.out.println(((Article)aboutPencil).getName() + '\n');
+        System.out.println(((Article) aboutPencil).getName() + '\n');
         //Строковое представление через интерфейс:
         System.out.println(coloredCardboard.getStringRepresentation());
         System.out.println(aboutAlbum.getStringRepresentation() + '\n');
