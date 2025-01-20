@@ -17,7 +17,7 @@ public class App {
         testAppStationery();
         System.out.println("________________" + '\n');
         testAppStationeryWithSearchAndArticle();
-        System.out.println("________________" + '\n');
+        System.out.println("\n_______ДЗ.Исключения_________\n_");
         testAppStationeryWithException();
     }
 
