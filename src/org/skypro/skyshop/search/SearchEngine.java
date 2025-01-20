@@ -1,7 +1,6 @@
 
 package org.skypro.skyshop.search;
 
-//import org.skypro.skyshop.search.BestResultNotFound;
 public class SearchEngine {
     private Searchable[] searched;
 
