@@ -7,8 +7,16 @@ public class DiscountedProduct extends Product {
 
     public DiscountedProduct(String name, int basePrice, int percentageDiscount) {
         super(name);
-        this.basePrice = basePrice;
-        this.percentageDiscount = percentageDiscount;
+        if (basePrice > 0) {
+            this.basePrice = basePrice;
+        } else {
+            throw new IllegalArgumentException("Цена продукта дожна быть больше 1 рубля или равна ему");
+        }
+        if (percentageDiscount >= 0 && percentageDiscount <= 100) {
+            this.percentageDiscount = percentageDiscount;
+        } else {
+            throw new IllegalArgumentException("Процент должен быть числом в диапазоне от 0 до 100 включительно");
+        }
     }
 
     @Override
