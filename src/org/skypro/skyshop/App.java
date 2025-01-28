@@ -2,6 +2,7 @@ package org.skypro.skyshop;//TIP To <b>Run</b> code, press <shortcut actionId="R
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
 import org.skypro.skyshop.basket.Basket;
+import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
@@ -11,6 +12,7 @@ import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -19,6 +21,52 @@ public class App {
         testAppStationeryWithSearchAndArticle();
         System.out.println("\n_______ДЗ.Исключения_________\n_");
         testAppStationeryWithException();
+        System.out.println("\n_______ДЗ.Списки_________\n_");
+        testAppStationeryWithLists();
+    }
+
+    public static void testAppStationeryWithLists() {
+        //товары канцелярского магазина
+        SimpleProduct pen = new SimpleProduct("ручка синяя", 15);
+        FixPriceProduct pen2 = new FixPriceProduct("ручка красная упак 10шт");
+        FixPriceProduct pen3 = new FixPriceProduct("ручка зеленая упак 10шт");
+        DiscountedProduct pen4 = new DiscountedProduct("подарочная ручка", 500, 15);
+        DiscountedProduct pen5 = new DiscountedProduct("гелевая ручка", 11, 10);
+        SimpleProduct pen6 = new SimpleProduct("ручка черная", 15);
+        SimpleProduct pencil = new SimpleProduct("карандаш", 15);
+        System.out.println("--Демонстрация изменений  в классе Basket--");
+        //корзина покупателя Маша
+        Basket masha = new Basket();
+        masha.addProduct(pen);
+        masha.addProduct(pen2);
+        masha.addProduct(pen3);
+        masha.addProduct(pen4);
+        masha.addProduct(pen5);
+        //Вывести содержимое корзины
+        System.out.println("\nВ корзине Маши: \n" + masha);
+        //Удалить существующий продукт из корзины и вывести удаленные продукты на экран.
+        System.out.println("\nудалили" + masha.removeProductByName("ручка синяя"));
+        //Удаляем несуществующий продукт.
+        List<Product> removed = masha.removeProductByName("глобус");
+        //Проверяем, что список удаленных продуктов пустой и вывести сообщение “Список пуст”.
+        if (removed.isEmpty()) {
+            System.out.println("\nСписок пуст");
+        }
+        //Вывести содержимое корзины на экран.
+        System.out.println("\nВ корзине Маши: \n" + masha);
+        //
+        System.out.println("\n--Демонстрация зменений в классе SearchEngine--");
+        SearchEngine stationery = new SearchEngine(7);
+        stationery.add(pencil);
+        stationery.add(pen);
+        stationery.add(pen2);
+        stationery.add(pen3);
+        stationery.add(pen4);
+        stationery.add(pen5);
+        stationery.add(pen6);
+        System.out.println("\nПоиск по слову - ручка: \n" + stationery.search("ручка") + '\n');
+        System.out.println("Поиск по слову - карандаш: \n" + stationery.search("карандаш") + '\n');
+        System.out.println("Поиск по слову - ластик: \n" + stationery.search("ластик") + '\n');
     }
 
     public static void testAppStationeryWithException() {
@@ -114,10 +162,10 @@ public class App {
         //переполнение:
         stationery.add(aboutAlbum);
         //поиск:
-        System.out.println('\n' + "Поиск по слову - тетрадь: " + '\n' + Arrays.toString(stationery.search("тетрадь")) + '\n');
-        System.out.println("Поиск по слову - альбом: " + '\n' + Arrays.toString(stationery.search("альбом")) + '\n');
-        System.out.println("Поиск по слову - карандаш: " + '\n' + Arrays.toString(stationery.search("карандаш")) + '\n');
-        System.out.println("Поиск по слову - ручка: " + '\n' + Arrays.toString(stationery.search("ручка")));
+        System.out.println('\n' + "Поиск по слову - тетрадь: " + '\n' + stationery.search("тетрадь") + '\n');
+        System.out.println("Поиск по слову - альбом: " + '\n' + stationery.search("альбом") + '\n');
+        System.out.println("Поиск по слову - карандаш: " + '\n' + stationery.search("карандаш") + '\n');
+        System.out.println("Поиск по слову - ручка: " + '\n' + stationery.search("ручка"));
     }
 
     public static void testAppStationery() {
@@ -136,8 +184,7 @@ public class App {
         sasha.addProduct(album);
         sasha.addProduct(squaredNotebook);
         sasha.addProduct(linedNotebook);
-        //2.
-        sasha.addProduct(coloredCardboard);
+        //2.здесь была демонстрация невозможности добавления продукта из-за нехватки места
         //3.
         System.out.println(sasha);
         //4.
