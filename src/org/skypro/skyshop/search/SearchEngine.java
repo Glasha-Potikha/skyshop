@@ -54,20 +54,24 @@ public class SearchEngine {
             }
             index = 0;
         }
-        //поиск наибольшего значения повторений:
-        int maxRes = 0;
-        Searchable resSearch = null;
-        for (int i = 0; i < (results.length); i++) {
-            if (results[i] > maxRes) {
-                maxRes = results[i];
-                resSearch = searched[i];
-            }
-        }
-        if (resSearch == null || maxRes == 0) {
+
+        int indexMaxRes = searchIndexMaxInt(results);
+        if (indexMaxRes < 0) {
             throw new BestResultNotFound(find);
         }
-        return resSearch;
 
+        return searched[indexMaxRes];
     }
 
+    public static int searchIndexMaxInt(int[] num) {
+        int max = 0;
+        int index = -1;
+        for (int i = 0; i < (num.length); i++) {
+            if (num[i] > max) {
+                max = num[i];
+                index = i;
+            }
+        }
+        return index;
+    }
 }
