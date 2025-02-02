@@ -194,7 +194,7 @@ public class App {
         //6.
         System.out.println(sasha.isProductInBasket(coloredCardboard.getName()));
         //7.
-        sasha.clearBasket();
+        sasha.clear();
         //8.
         System.out.println(sasha);
         //9.

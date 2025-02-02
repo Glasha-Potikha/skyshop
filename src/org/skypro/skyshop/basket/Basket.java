@@ -72,7 +72,7 @@ public class Basket {
         return itFound;
     }
 
-    public void clearBasket() {
+    public void clear() {
         Iterator<Product> iterator = products.listIterator();
         while (iterator.hasNext()) {
             iterator.next();
