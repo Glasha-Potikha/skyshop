@@ -2,13 +2,16 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class Basket {
-    private Product[] products;
+    private List<Product> products;
 
     public Basket() {
-        this.products = new Product[5];
+        this.products = new LinkedList<>();
     }
 
     @Override
@@ -28,20 +31,12 @@ public class Basket {
     }
 
     public void addProduct(Product newProduct) {
-        if (this.products[4] != null) {
-            System.out.println("Невозможно добавить продукт");
-            return;
-        }
+
         if (this.isProductInBasket(newProduct.getName())) {
             System.out.println("Продукт уже есть в корзине");
             return;
         }
-        for (int i = 0; i < this.products.length; i++) {
-            if (products[i] == null) {
-                products[i] = newProduct;
-                break;
-            }
-        }
+        products.add(newProduct);
 
     }
 
@@ -77,12 +72,25 @@ public class Basket {
         return itFound;
     }
 
-    public void clearBasket() {
-        for (int i = 0; i < this.products.length; i++) {
-            if (products[i] != null) {
-                products[i] = null;
+    public void clear() {
+        Iterator<Product> iterator = products.listIterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            iterator.remove();
+        }
+    }
+
+    public List<Product> removeProductByName(String name) {
+        List<Product> removed = new LinkedList<>();
+        Iterator<Product> iterator = products.listIterator();
+        while (iterator.hasNext()) {
+            Product element = iterator.next();
+            if (Objects.equals(element.getName(), name)) {
+                removed.add(element);
+                iterator.remove();
             }
         }
+        return removed;
     }
 }
 
