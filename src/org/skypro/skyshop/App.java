@@ -11,7 +11,6 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class App {
@@ -64,9 +63,10 @@ public class App {
         stationery.add(pen4);
         stationery.add(pen5);
         stationery.add(pen6);
-        System.out.println("\nПоиск по слову - ручка: \n" + stationery.search("ручка") + '\n');
-        System.out.println("Поиск по слову - карандаш: \n" + stationery.search("карандаш") + '\n');
-        System.out.println("Поиск по слову - ластик: \n" + stationery.search("ластик") + '\n');
+
+        stationery.printResSearch("ручка");
+        stationery.printResSearch("карандаш");
+        stationery.printResSearch("ластик");
     }
 
     public static void testAppStationeryWithException() {
@@ -162,10 +162,11 @@ public class App {
         //переполнение:
         stationery.add(aboutAlbum);
         //поиск:
-        System.out.println('\n' + "Поиск по слову - тетрадь: " + '\n' + stationery.search("тетрадь") + '\n');
-        System.out.println("Поиск по слову - альбом: " + '\n' + stationery.search("альбом") + '\n');
-        System.out.println("Поиск по слову - карандаш: " + '\n' + stationery.search("карандаш") + '\n');
-        System.out.println("Поиск по слову - ручка: " + '\n' + stationery.search("ручка"));
+        stationery.printResSearch("тетрадь");
+        stationery.printResSearch("альбом");
+        stationery.printResSearch("карандаш");
+        stationery.printResSearch("ручка");
+
     }
 
     public static void testAppStationery() {
