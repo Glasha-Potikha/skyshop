@@ -1,6 +1,8 @@
 
 package org.skypro.skyshop.search;
 
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,17 +17,29 @@ public class SearchEngine {
         searched.add(searchable);
     }
 
-    public List<Searchable> search(String find) {
-        List<Searchable> res = new ArrayList<>(5);
-
+    public Map<String, Searchable> search(String find) {
+        Map<String, Searchable> res = new TreeMap<>();
         for (Searchable thing : searched) {
             //если объект включает в себя искомое
             if (thing.searchTerm().contains(find)) {
-                //добавляем к спсику
-                res.add(thing);
+                //добавляем к мапе
+                res.put(thing.searchTerm(), thing);
             }
         }
         return res;
+    }
+
+    public void printResSearch(String find) {
+        System.out.println("\nПоиск по слову - " + find + ":");
+        Map<String, Searchable> res = search(find);
+        if (res.isEmpty()) {
+            System.out.println("Ничего не найдено");
+        } else {
+            for (Searchable r : res.values()) {
+                System.out.println(r);
+            }
+        }
+        System.out.println();
     }
 
     public Searchable searchForTheBestMatch(String find) throws BestResultNotFound {
@@ -44,7 +58,6 @@ public class SearchEngine {
             }
             index = 0;
         }
-
         int indexMaxRes = searchIndexMaxInt(results);
         if (indexMaxRes < 0) {
             throw new BestResultNotFound(find);
