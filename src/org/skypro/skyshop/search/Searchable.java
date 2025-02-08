@@ -10,7 +10,9 @@ public interface Searchable extends Comparable<Searchable> {
     }
 
     @Override
-    default public int compareTo(Searchable o) {
+    default int compareTo(Searchable o) {
         return searchTerm().compareTo(o.searchTerm());
     }
 }
+
+
