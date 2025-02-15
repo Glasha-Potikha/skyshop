@@ -35,6 +35,4 @@ public class DiscountedProduct extends Product {
         return super.getName() +
                 ": " + basePrice + " (" + percentageDiscount + ")";
     }
-
-
 }

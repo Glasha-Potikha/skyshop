@@ -26,7 +26,7 @@ public class App {
 
     public static void testAppStationeryWithLists() {
         //товары канцелярского магазина
-        SimpleProduct pen = new SimpleProduct("ручка синяя", 15);
+        SimpleProduct pen = new SimpleProduct("ручка синяяя", 15);
         FixPriceProduct pen2 = new FixPriceProduct("ручка красная упак 10шт");
         FixPriceProduct pen3 = new FixPriceProduct("ручка зеленая упак 10шт");
         DiscountedProduct pen4 = new DiscountedProduct("подарочная ручка", 500, 15);
@@ -44,7 +44,7 @@ public class App {
         //Вывести содержимое корзины
         System.out.println("\nВ корзине Маши: \n" + masha);
         //Удалить существующий продукт из корзины и вывести удаленные продукты на экран.
-        System.out.println("\nудалили" + masha.removeProductByName("ручка синяя"));
+        System.out.println("\nудалили" + masha.removeProductByName("ручка синяяя"));
         //Удаляем несуществующий продукт.
         List<Product> removed = masha.removeProductByName("глобус");
         //Проверяем, что список удаленных продуктов пустой и вывести сообщение “Список пуст”.
@@ -55,7 +55,7 @@ public class App {
         System.out.println("\nВ корзине Маши: \n" + masha);
         //
         System.out.println("\n--Демонстрация зменений в классе SearchEngine--");
-        SearchEngine stationery = new SearchEngine(7);
+        SearchEngine stationery = new SearchEngine();
         stationery.add(pencil);
         stationery.add(pen);
         stationery.add(pen2);
@@ -106,7 +106,7 @@ public class App {
         Searchable aboutPencil = new Article("Графитовый карандаш", "Деревянная палочка со стержнем из графита для письма, рисования, черчения.");
         Searchable aboutNotebook = new Article("Школьная тетрадь", "тетрадь, предназначенная для письма школьниками в период обучения в общеобразовательных учебных учреждениях и учреждениях начального профессионального образования.");
 
-        SearchEngine stationery = new SearchEngine(9);
+        SearchEngine stationery = new SearchEngine();
         stationery.add(pen);
         stationery.add(pencil);
         stationery.add(album);
@@ -135,7 +135,7 @@ public class App {
         Searchable linedNotebook = new DiscountedProduct("тетрадь в линейку", 11, 10);
         SimpleProduct coloredCardboard = new SimpleProduct("цветной картон", 60);
 
-        SearchEngine stationery = new SearchEngine(9);
+        SearchEngine stationery = new SearchEngine();
 
         //статьи о товарах канцелярского магазина
         Searchable aboutPen = new Article("Шариковой ручка", "Ша́риковая ру́чка — разновидность ручки (авторучки), при письме которой чернила переносятся из резервуара на бумагу вращающимся шариком.");

@@ -1,29 +1,27 @@
 
 package org.skypro.skyshop.search;
 
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SearchEngine {
-    private List<Searchable> searched;
+    private Set<Searchable> searched;
 
-    public SearchEngine(int len) {
-        searched = new ArrayList<>(len);
+    public SearchEngine() {
+        searched = new LinkedHashSet<>();
+        //Linked потому что в searchForTheBestMatch важен порядок элементов
     }
 
     public void add(Searchable searchable) {
         searched.add(searchable);
     }
 
-    public Map<String, Searchable> search(String find) {
-        Map<String, Searchable> res = new TreeMap<>();
+    public TreeSet<Searchable> search(String find) {
+        TreeSet<Searchable> res = new TreeSet<Searchable>(new LengthStringComparator());
         for (Searchable thing : searched) {
             //если объект включает в себя искомое
             if (thing.searchTerm().contains(find)) {
-                //добавляем к мапе
-                res.put(thing.searchTerm(), thing);
+                //добавляем к сету
+                res.add(thing);
             }
         }
         return res;
@@ -31,11 +29,11 @@ public class SearchEngine {
 
     public void printResSearch(String find) {
         System.out.println("\nПоиск по слову - " + find + ":");
-        Map<String, Searchable> res = search(find);
+        TreeSet<Searchable> res = search(find);
         if (res.isEmpty()) {
             System.out.println("Ничего не найдено");
         } else {
-            for (Searchable r : res.values()) {
+            for (Searchable r : res) {
                 System.out.println(r);
             }
         }
@@ -45,24 +43,31 @@ public class SearchEngine {
     public Searchable searchForTheBestMatch(String find) throws BestResultNotFound {
         //массив, в который положим количество повторений строки в каждом объекте
         int[] results = new int[searched.size()];
-
+        int i = 0;
         int index = 0;//индекс, с которого начинаем искать подстроку
-        //вычисляем количество повторений в каждом объекте
-        for (int i = 0; i < searched.size(); i++) {
-            String str = searched.get(i).searchTerm();
+        for (Searchable s : searched) {
+            String str = s.searchTerm();
             int indexFind = str.indexOf(find, index); //индексПодстроки
             while (indexFind != -1) {
                 results[i]++;
                 index = index + find.length();
                 indexFind = str.indexOf(find, index);
             }
-            index = 0;
+            i++;
         }
         int indexMaxRes = searchIndexMaxInt(results);
         if (indexMaxRes < 0) {
             throw new BestResultNotFound(find);
         }
-        return searched.get(indexMaxRes);
+        i = 0;
+        for (Searchable s : searched) {
+            //останавливаемся на элементе с максимальным количество повторений
+            if (i == indexMaxRes) {
+                return s;
+            }
+            i++;
+        }
+        return null;
     }
 
     public static int searchIndexMaxInt(int[] num) {
