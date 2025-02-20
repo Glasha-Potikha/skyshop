@@ -14,15 +14,9 @@ public class Basket {
 
     @Override
     public String toString() {
-        String res = "";
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product != null) {
-                    res += product.toString();
-                    res += '\n';
-                }
-            }
-        }
+        String res = products.values().stream().flatMap(Collection::stream)
+                .map(product -> product.toString() + '\n')
+                .reduce("", String::concat);
         if (res == "") {
             return "в корзине пусто";
         }
@@ -40,28 +34,21 @@ public class Basket {
         }
     }
 
+
     public int getTotalPrice() {
-        int res = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product != null) {
-                    res += product.getPrice();
-                }
-            }
-        }
+        int res = products.values().stream().flatMap(Collection::stream)
+                .mapToInt(Product::getPrice)
+                .sum();
         return res;
     }
 
+
     public int getAllSpecial() {
-        int res = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product.isSpecial()) {
-                    res++;
-                }
-            }
-        }
-        return res;
+        Long res = products.values().stream().flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
+        var res2 = res.intValue();
+        return res2;
     }
 
     public boolean isProductInBasket(String searchedProduct) {

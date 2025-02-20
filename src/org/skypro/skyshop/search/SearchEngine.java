@@ -2,6 +2,7 @@
 package org.skypro.skyshop.search;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
     private Set<Searchable> searched;
@@ -16,14 +17,9 @@ public class SearchEngine {
     }
 
     public TreeSet<Searchable> search(String find) {
-        TreeSet<Searchable> res = new TreeSet<Searchable>(new LengthStringComparator());
-        for (Searchable thing : searched) {
-            //если объект включает в себя искомое
-            if (thing.searchTerm().contains(find)) {
-                //добавляем к сету
-                res.add(thing);
-            }
-        }
+        TreeSet res = searched.stream()
+                .filter(thing -> thing.searchTerm().contains(find))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new LengthStringComparator())));
         return res;
     }
 
